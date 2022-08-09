@@ -4,7 +4,6 @@ import { Chart } from "regraph";
 const axios = require('axios');
 
 const url = "http://127.0.0.1:8004/LATEST/resources/graphql?rs:query=query%20someQuery%20%7B%20graphql_Humans%20%7B%20id%20name%20%7D%20%7D";
-let data = {"graphql_Humans":[{"id":1, "name":"Abby"}]};
 
 function createHumanNode(name) {
   return {
@@ -12,45 +11,33 @@ function createHumanNode(name) {
   };
 }
 
+function createFriendLink(sourceNodeId, targetNodeId) {
+  return {
+    // a link's ends are defined by id1 and id2
+    id1: `human_${sourceNodeId}`,
+    id2: `human_${targetNodeId}`,
+    label: {
+      text: 'Friend Of',
+      color: "#2e3842",
+      backgroundColor: "#f5f7fa50",
+    },
+    color: "#606d7b",
+    width: 4,
+  }
+}
+
 function toReGraphFormat(data) {
   const items = {};
   for (const human of data.graphql_Humans) {
     items[`human_${human.id}`] = createHumanNode(human.name);
+    for (const friend of human.friends) {
+      items[`friend_${human.id}_${friend.id}`] = createFriendLink(human.id, friend.id);
+    }
   }
   return items;
 }
 
-// function getHumanData_http() {
-//   data = {"graphql_Humans":[{"id":1, "name":"John"}]}
-//   // {"graphql_Humans":[{"id":1001, "name":"Jenny"}, {"id":1000, "name":"Jane"}, {"id":2, "name":"Jim"}, {"id":3, "name":"Joe"}, {"id":1002, "name":"Joan"}, {"id":1, "name":"John"}]}
-//
-//   const request = http.request(url, (response) => {
-//     data = {"graphql_Humans":[{"id":1, "name":"alex"}]}
-//     // {"graphql_Humans":[{"id":1001, "name":"Jenny"}, {"id":1000, "name":"Jane"}, {"id":2, "name":"Jim"}, {"id":3, "name":"Joe"}, {"id":1002, "name":"Joan"}, {"id":1, "name":"John"}]}
-//     response.on('data', (chunk) => {
-//       data = {"graphql_Humans":[{"id":1, "name":"alex"}]}
-//       data = data + chunk.toString();
-//     });
-//
-//     response.on('end', () => {
-//       data = {"graphql_Humans":[{"id":1, "name":"alex"}]}
-//       const body = JSON.parse(data);
-//       console.log(body);
-//     });
-//     return data;
-//   })
-//
-//   request.on('error', (error) => {
-//     data = {"graphql_Humans":[{"id":1, "name":"alex"}]}
-//     console.log('An error', error);
-//   });
-//
-//   request.end()
-//   return data;
-// }
-
 function getHumanData_axios() {
-  data = {"graphql_Humans":[{"id":1, "name":"Chuck"}]};
   axios.get(url,
     {
       headers: {
@@ -58,8 +45,9 @@ function getHumanData_axios() {
       }
   })
     .then((response) => {
-       data = {"graphql_Humans":[{"id":1, "name":JSON.stringify(response.data)}]}
-       const items = toReGraphFormat(response.data.data);
+       const data = {"graphql_Humans":[{"id":1001, "name":"Jenny", "friends":[{"id":2},{"id":1002},{"id":1000}]}, {"id":1000, "name":"Jane", "friends":[]}, {"id":2, "name":"Jim", "friends":[]}, {"id":3, "name":"Joe", "friends":[]}, {"id":1002, "name":"Joan", "friends":[{"id":3}, {"id":1}]}, {"id":1, "name":"John", "friends":[]}]}
+       // const items = toReGraphFormat(response.data.data);
+       const items = toReGraphFormat(data);
        ReactDOM.render(
          <div style={{ width: "100vw", height: "100vh" }}>
            <Chart items={items} />
@@ -69,7 +57,7 @@ function getHumanData_axios() {
      })
      .catch((error) => {
        console.error(error);
-       data = {"graphql_Humans":[{"id":1, "name": JSON.stringify(error)}]}
+       const data = {"graphql_Humans":[{"id":1, "name": JSON.stringify(error)}]}
        const items = toReGraphFormat(data);
        ReactDOM.render(
          <div style={{ width: "100vw", height: "100vh" }}>
@@ -87,7 +75,7 @@ const DEFAULT_ITEMS = {
 };
 
 function App() {
-  data = null;
+  const data = null;
   getHumanData_axios();
 
   const items =
