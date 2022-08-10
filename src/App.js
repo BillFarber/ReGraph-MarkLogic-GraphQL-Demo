@@ -9,21 +9,29 @@ const url = `http://127.0.0.1:8004/LATEST/resources/graphql?rs:query=${graphqlQu
 
 function createHumanNode(name) {
   return {
-    label: { text: name }
+    label: { text: name },
+    color: "#0066ff",
   };
 }
 
-function createFriendLink(sourceNodeId, targetNodeId) {
+function createCarNode(model) {
+  return {
+    label: { text: model },
+    color: "#39e600",
+  };
+}
+
+function createCarLink(sourceNodeId, targetNodeId) {
   return {
     // a link's ends are defined by id1 and id2
-    id1: `human_${sourceNodeId}`,
-    id2: `human_${targetNodeId}`,
+    id1: `${sourceNodeId}`,
+    id2: `${targetNodeId}`,
     label: {
-      text: 'Friend Of',
+      text: '',
       color: "#2e3842",
       backgroundColor: "#f5f7fa50",
     },
-    color: "#606d7b",
+    color: "#ff9900",
     width: 4,
   }
 }
@@ -31,10 +39,14 @@ function createFriendLink(sourceNodeId, targetNodeId) {
 function toReGraphFormat(data) {
   const items = {};
   for (const human of data.Persons) {
-    items[`human_${human.name}`] = createHumanNode(human.name);
-    // for (const friend of human.friends) {
-    //   items[`friend_${human.name}_${friend.id}`] = createFriendLink(human.id, friend.id);
-    // }
+    const humanNodeId = `human_${human.name}`;
+    items[humanNodeId] = createHumanNode(human.name);
+    for (const car of human.cars) {
+      const carNodeId = `car_${car.model}`;
+      items[carNodeId] = createCarNode(car.model);
+      const humanCarLinkId = `link_${human.name}_${car.model}`;
+      items[humanCarLinkId] = createCarLink(`human_${human.name}`, `car_${car.model}`);
+    }
   }
   return items;
 }
@@ -78,13 +90,8 @@ const DEFAULT_ITEMS = {
 };
 
 function App() {
-  const data = null;
+  const items = DEFAULT_ITEMS
   getHumanData_axios();
-
-  const items =
-    data == null || Object.keys(data).length === 0
-      ? DEFAULT_ITEMS
-      : toReGraphFormat(data);
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
