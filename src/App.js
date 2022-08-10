@@ -3,7 +3,9 @@ import ReactDOM from "react-dom";
 import { Chart } from "regraph";
 const axios = require('axios');
 
-const url = "http://127.0.0.1:8004/LATEST/resources/graphql?rs:query=query%20someQuery%20%7B%20graphql_Humans%20%7B%20id%20name%20%7D%20%7D";
+//const url = "http://127.0.0.1:8004/LATEST/resources/graphql?rs:query=query%20someQuery%20%7B%20graphql_Humans%20%7B%20id%20name%20%7D%20%7D";
+const graphqlQueryString = "query%20someQuery%20{%20Persons%20{%20name%20height%20cars%20{%20model%20}%20}%20}";
+const url = `http://127.0.0.1:8004/LATEST/resources/graphql?rs:query=${graphqlQueryString}`;
 
 function createHumanNode(name) {
   return {
@@ -28,11 +30,11 @@ function createFriendLink(sourceNodeId, targetNodeId) {
 
 function toReGraphFormat(data) {
   const items = {};
-  for (const human of data.graphql_Humans) {
-    items[`human_${human.id}`] = createHumanNode(human.name);
-    for (const friend of human.friends) {
-      items[`friend_${human.id}_${friend.id}`] = createFriendLink(human.id, friend.id);
-    }
+  for (const human of data.Persons) {
+    items[`human_${human.name}`] = createHumanNode(human.name);
+    // for (const friend of human.friends) {
+    //   items[`friend_${human.name}_${friend.id}`] = createFriendLink(human.id, friend.id);
+    // }
   }
   return items;
 }
@@ -45,9 +47,10 @@ function getHumanData_axios() {
       }
   })
     .then((response) => {
-       const data = {"graphql_Humans":[{"id":1001, "name":"Jenny", "friends":[{"id":2},{"id":1002},{"id":1000}]}, {"id":1000, "name":"Jane", "friends":[]}, {"id":2, "name":"Jim", "friends":[]}, {"id":3, "name":"Joe", "friends":[]}, {"id":1002, "name":"Joan", "friends":[{"id":3}, {"id":1}]}, {"id":1, "name":"John", "friends":[]}]}
-       // const items = toReGraphFormat(response.data.data);
-       const items = toReGraphFormat(data);
+      // A little hard-coded data that can be used for testing & development
+      //  const data = {"graphql_Humans":[{"id":1001, "name":"Jenny", "friends":[{"id":2},{"id":1002},{"id":1000}]}, {"id":1000, "name":"Jane", "friends":[]}, {"id":2, "name":"Jim", "friends":[]}, {"id":3, "name":"Joe", "friends":[]}, {"id":1002, "name":"Joan", "friends":[{"id":3}, {"id":1}]}, {"id":1, "name":"John", "friends":[]}]}
+       const items = toReGraphFormat(response.data.data);
+       //const items = toReGraphFormat(data);
        ReactDOM.render(
          <div style={{ width: "100vw", height: "100vh" }}>
            <Chart items={items} />

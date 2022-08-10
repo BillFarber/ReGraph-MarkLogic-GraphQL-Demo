@@ -1,0 +1,593 @@
+{
+	"info": {
+		"_postman_id": "487861dc-836f-4c8e-b927-5815c742975b",
+		"name": "Setup ReGraph Example",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22240605"
+	},
+	"item": [
+		{
+			"name": "Clear the Schemas database",
+			"request": {
+				"auth": {
+					"type": "digest",
+					"digest": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "MD5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "     {\n       \"operation\": \"clear-database\"\n     }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{Server}}:8002/manage/v2/databases/Schemas",
+					"protocol": "http",
+					"host": [
+						"{{Server}}"
+					],
+					"port": "8002",
+					"path": [
+						"manage",
+						"v2",
+						"databases",
+						"Schemas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Clear the graphqlEndpoint-test-content database",
+			"request": {
+				"auth": {
+					"type": "digest",
+					"digest": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "MD5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "     {\n       \"operation\": \"clear-database\"\n     }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{Server}}:8002/manage/v2/databases/graphqlEndpoint-test-content",
+					"protocol": "http",
+					"host": [
+						"{{Server}}"
+					],
+					"port": "8002",
+					"path": [
+						"manage",
+						"v2",
+						"databases",
+						"graphqlEndpoint-test-content"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insert Humans TDE",
+			"request": {
+				"auth": {
+					"type": "digest",
+					"digest": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "MD5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{HumansSchema}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{Server}}:8000/v1/documents?database=Schemas&uri=/tde/humans-TDE.tdej&collection=http://marklogic.com/xdmp/tde",
+					"protocol": "http",
+					"host": [
+						"{{Server}}"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"documents"
+					],
+					"query": [
+						{
+							"key": "database",
+							"value": "Schemas"
+						},
+						{
+							"key": "uri",
+							"value": "/tde/humans-TDE.tdej"
+						},
+						{
+							"key": "collection",
+							"value": "http://marklogic.com/xdmp/tde"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insert Cars TDE",
+			"request": {
+				"auth": {
+					"type": "digest",
+					"digest": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "MD5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{CarsSchema}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{Server}}:8000/v1/documents?database=Schemas&uri=/tde/cars-TDE.tdej&collection=http://marklogic.com/xdmp/tde",
+					"protocol": "http",
+					"host": [
+						"{{Server}}"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"documents"
+					],
+					"query": [
+						{
+							"key": "database",
+							"value": "Schemas"
+						},
+						{
+							"key": "uri",
+							"value": "/tde/cars-TDE.tdej"
+						},
+						{
+							"key": "collection",
+							"value": "http://marklogic.com/xdmp/tde"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insert Humans Data",
+			"request": {
+				"auth": {
+					"type": "digest",
+					"digest": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "MD5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{HumansData}}",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{Server}}:8000/v1/documents?database=graphqlEndpoint-test-content&uri=/humans.xml",
+					"protocol": "http",
+					"host": [
+						"{{Server}}"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"documents"
+					],
+					"query": [
+						{
+							"key": "database",
+							"value": "graphqlEndpoint-test-content"
+						},
+						{
+							"key": "uri",
+							"value": "/humans.xml"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insert Cars Data",
+			"request": {
+				"auth": {
+					"type": "digest",
+					"digest": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "MD5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{CarsData}}",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{Server}}:8000/v1/documents?database=graphqlEndpoint-test-content&uri=/cars.xml",
+					"protocol": "http",
+					"host": [
+						"{{Server}}"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"documents"
+					],
+					"query": [
+						{
+							"key": "database",
+							"value": "graphqlEndpoint-test-content"
+						},
+						{
+							"key": "uri",
+							"value": "/cars.xml"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Configure GraphQL for Explicit Schema",
+			"request": {
+				"auth": {
+					"type": "digest",
+					"digest": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "MD5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{{explicitConfig}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{Server}}:8000/v1/documents?database=Schemas&uri=/graphql/config.json",
+					"protocol": "http",
+					"host": [
+						"{{Server}}"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"documents"
+					],
+					"query": [
+						{
+							"key": "database",
+							"value": "Schemas"
+						},
+						{
+							"key": "uri",
+							"value": "/graphql/config.json"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insert Explicit Schema",
+			"request": {
+				"auth": {
+					"type": "digest",
+					"digest": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "MD5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "type graphql_Humans {\n  id: Int @ID\n  name: String\n  height: Int\n  weight: Int\n  cars: [graphql_Cars] @Join(leftJoinColumn: \"id\", rightJoinColumn: \"ownerId\")\n}\n\ntype Query {\n  Persons(id: Int, name: String, height: Int, , weight: Int, cars: [graphql_Cars]): [graphql_Humans]\n}",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{Server}}:8000/v1/documents?database=Schemas&uri=/graphql/explicitSchema.sdl",
+					"protocol": "http",
+					"host": [
+						"{{Server}}"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"documents"
+					],
+					"query": [
+						{
+							"key": "database",
+							"value": "Schemas"
+						},
+						{
+							"key": "uri",
+							"value": "/graphql/explicitSchema.sdl"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ST4: GET Request Existing View from Implicit Schema",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "digest",
+					"digest": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "algorithm",
+							"value": "MD5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-type",
+						"value": "application/graphql",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{Server}}:8004/LATEST/resources/graphql?rs:query=query%20someQuery%20{%20Persons%20{%20name%20height%20cars%20{%20model%20}%20}%20}",
+					"protocol": "http",
+					"host": [
+						"{{Server}}"
+					],
+					"port": "8004",
+					"path": [
+						"LATEST",
+						"resources",
+						"graphql"
+					],
+					"query": [
+						{
+							"key": "rs:query",
+							"value": "query%20someQuery%20{%20Persons%20{%20name%20height%20cars%20{%20model%20}%20}%20}",
+							"description": "Any valid GraphQL request is fine"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "digest",
+		"digest": [
+			{
+				"key": "password",
+				"value": "admin",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "admin",
+				"type": "string"
+			},
+			{
+				"key": "algorithm",
+				"value": "MD5",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"if(pm.info.requestName===\"Dummy Test - For collection initiatlization\") {",
+					"    console.log(\"SmokeTests_NoViews Pre-request Script\");",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
